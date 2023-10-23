@@ -1,6 +1,7 @@
 package com.example.week8_tablayout
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -47,6 +48,7 @@ class LoginFragment : Fragment() {
 
         with(binding) {
             val credential = dataReceiver.getData()
+            val Intent = Intent(activity, HomeActivity::class.java)
 
             btnLogin.setOnClickListener {
                 val loginUsername = editTextUsername.text.toString()
@@ -72,14 +74,14 @@ class LoginFragment : Fragment() {
                 }
 
                 if (validated) {
-                    pager?.currentItem = 0
+                    startActivity(Intent)
                 }
             }
 
             //Clickable span to redirect to register fragment
             val spannableString = android.text.SpannableString(textViewRedirectRegister.text)
             val clickableSpan = object : ClickableSpan() {
-                override fun onClick(widget: android.view.View) {
+                override fun onClick(widget: View) {
                     pager?.currentItem = 0
                 }
             }
