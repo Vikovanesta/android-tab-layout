@@ -9,8 +9,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.week8_tablayout.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RegisterFragment.OnDataPass {
     private lateinit var viewPager2: ViewPager2
+    var credential: MutableMap<String, String> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,5 +39,9 @@ class MainActivity : AppCompatActivity() {
         for (i in 0 until menu!!.size()) menu.getItem(i).isVisible = false
         supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this,R.color.Primary)))
         return true
+    }
+
+    override fun onDataPass(data: MutableMap<String, String>?) {
+        credential = data!!
     }
 }

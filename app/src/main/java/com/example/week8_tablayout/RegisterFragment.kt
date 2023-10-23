@@ -1,10 +1,16 @@
 package com.example.week8_tablayout
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import com.example.week8_tablayout.databinding.FragmentRegisterBinding
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +26,9 @@ class RegisterFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
+    lateinit var dataPasser: OnDataPass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +41,94 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+    ): View {
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        val pager = activity?.findViewById<ViewPager2>(R.id.view_pager)
+
+        with(binding) {
+            val credential: MutableMap<String, String> = mutableMapOf(
+                "username" to editTextUsername.text.toString(),
+                "email" to editTextEmail.text.toString(),
+                "phone" to editTextPhone.text.toString(),
+                "password" to editTextPassword.text.toString()
+            )
+
+            btnRegister.setOnClickListener {
+                // Validation
+                var validated = true
+
+                if (credential["username"]?.isEmpty() == true) {
+                    editTextUsername.error = "Username is required"
+                    validated = false
+                }
+
+                if (credential["email"]?.isEmpty() == true) {
+                    editTextEmail.error = "Email is required"
+                    validated = false
+                } else if (!credential["email"]?.let { it1 ->
+                        android.util.Patterns.EMAIL_ADDRESS.matcher(
+                            it1
+                        ).matches()
+                    }!!){
+                    editTextEmail.error = "Invalid email format"
+                    validated = false
+                }
+
+                if (credential["phone"]?.isEmpty() == true) {
+                    editTextPhone.error = "Phone is required"
+                    validated = false
+                }
+
+                if (credential["password"]?.isEmpty() == true) {
+                    editTextPassword.error = "Password is required"
+                    validated = false
+                } else if (credential["password"]?.length!! < 8) {
+                    editTextPassword.error = "Password must be at least 8 characters long"
+                    validated = false
+                }
+
+                if (validated) {
+                    passData(credential)
+                    if (pager != null) {
+                        pager.currentItem = 1
+                    }
+                }
+            }
+
+            // Clickable span
+            val spannableString = android.text.SpannableString(textViewRedirectLogin.text)
+            val clickableSpan = object : android.text.style.ClickableSpan() {
+                override fun onClick(widget: android.view.View) {
+                    if (pager != null) {
+                        pager.currentItem = 1
+                    }
+                }
+            }
+
+            spannableString.setSpan(clickableSpan, 25, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            textViewRedirectLogin.text = spannableString
+            textViewRedirectLogin.movementMethod = LinkMovementMethod.getInstance()
+        }
+
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    interface OnDataPass {
+        fun onDataPass(data: MutableMap<String, String>?)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataPasser = context as OnDataPass
+    }
+
+    fun passData(data: MutableMap<String, String>?) {
+        dataPasser.onDataPass(data)
     }
 
     companion object {

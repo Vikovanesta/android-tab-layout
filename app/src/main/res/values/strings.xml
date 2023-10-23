@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Week 8 - Tab Layout</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="terms_and_conditions">By checking the box you agree to our <font color="#525BFF">Terms</font> and <font color="#525BFF">Conditions</font>.</string>
+    <string name="already_have_an_account_log_in">Already Have an Account? Log in</string>
+    <string name="homepage">Homepage</string>
+    <string name="new_member_register">New Member? Register</string>
+    <string name="welcome_username">Welcome username</string>
+    <string name="your_phone_has_been_registered">Your phone has been registered</string>
+    <string name="your_email_has_been_activated">Your email has been activated</string>
 </resources>
