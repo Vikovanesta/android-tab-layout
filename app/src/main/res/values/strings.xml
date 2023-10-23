@@ -15,4 +15,5 @@
     <string name="welcome_username">Welcome username</string>
     <string name="your_phone_has_been_registered">Your phone has been registered</string>
     <string name="your_email_has_been_activated">Your email has been activated</string>
+    <string name="gun_cat">gun cat</string>
 </resources>
