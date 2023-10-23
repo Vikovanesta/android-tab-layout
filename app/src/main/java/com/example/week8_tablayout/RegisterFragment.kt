@@ -46,14 +46,14 @@ class RegisterFragment : Fragment() {
         val pager = activity?.findViewById<ViewPager2>(R.id.view_pager)
 
         with(binding) {
-            val credential: MutableMap<String, String> = mutableMapOf(
-                "username" to editTextUsername.text.toString(),
-                "email" to editTextEmail.text.toString(),
-                "phone" to editTextPhone.text.toString(),
-                "password" to editTextPassword.text.toString()
-            )
 
             btnRegister.setOnClickListener {
+                val credential: MutableMap<String, String> = mutableMapOf(
+                    "username" to editTextUsername.text.toString(),
+                    "email" to editTextEmail.text.toString(),
+                    "phone" to editTextPhone.text.toString(),
+                    "password" to editTextPassword.text.toString()
+                )
                 // Validation
                 var validated = true
 

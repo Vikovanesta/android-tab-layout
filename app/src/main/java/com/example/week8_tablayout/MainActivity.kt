@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.week8_tablayout.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity(), RegisterFragment.OnDataPass {
+class MainActivity : AppCompatActivity(), RegisterFragment.OnDataPass, LoginFragment.OnDataRequest {
     private lateinit var viewPager2: ViewPager2
     var credential: MutableMap<String, String> = mutableMapOf()
 
@@ -43,5 +43,9 @@ class MainActivity : AppCompatActivity(), RegisterFragment.OnDataPass {
 
     override fun onDataPass(data: MutableMap<String, String>?) {
         credential = data!!
+    }
+
+    override fun getData(): MutableMap<String, String> {
+        return credential
     }
 }
