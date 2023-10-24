@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity(), RegisterFragment.OnDataPass, LoginFragment.OnDataRequest {
     private lateinit var viewPager2: ViewPager2
-    var credential: MutableMap<String, String> = mutableMapOf()
+    private var credential: MutableMap<String, String> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,9 @@ class MainActivity : AppCompatActivity(), RegisterFragment.OnDataPass, LoginFrag
     }
 
     override fun onDataPass(data: MutableMap<String, String>?) {
-        credential = data!!
+        if (data != null) {
+            credential = data
+        }
     }
 
     override fun getData(): MutableMap<String, String> {

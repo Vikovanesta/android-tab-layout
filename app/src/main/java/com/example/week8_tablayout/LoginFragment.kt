@@ -9,6 +9,7 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.week8_tablayout.databinding.FragmentLoginBinding
@@ -29,7 +30,7 @@ class LoginFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    lateinit var dataReceiver: OnDataRequest
+    private lateinit var dataReceiver: OnDataRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,8 @@ class LoginFragment : Fragment() {
 
         with(binding) {
             val credential = dataReceiver.getData()
+            val correctUsername = credential["username"]
+            val correctPassword = credential["password"]
             val Intent = Intent(activity, HomeActivity::class.java)
 
             btnLogin.setOnClickListener {
@@ -66,12 +69,14 @@ class LoginFragment : Fragment() {
                     editTextPassword.error = "Password is required"
                 }
 
-                if (loginUsername != credential["username"] ||
-                    loginPassword != credential["password"]) {
+                if (loginUsername != correctUsername ||
+                    loginPassword != correctPassword) {
                     validated = false
                     editTextUsername.error = "User not found"
                     editTextPassword.error = "User not found"
                 }
+
+                Toast.makeText(activity, "$correctUsername, $correctPassword", Toast.LENGTH_SHORT).show()
 
                 if (validated) {
                     startActivity(Intent)
@@ -82,7 +87,9 @@ class LoginFragment : Fragment() {
             val spannableString = android.text.SpannableString(textViewRedirectRegister.text)
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    pager?.currentItem = 0
+                    if (pager != null) {
+                        pager.currentItem = 0
+                    }
                 }
             }
 

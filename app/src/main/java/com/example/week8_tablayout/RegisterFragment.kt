@@ -28,6 +28,7 @@ class RegisterFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+    private var credential = mutableMapOf<String, String>()
     lateinit var dataPasser: OnDataPass
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class RegisterFragment : Fragment() {
         with(binding) {
 
             btnRegister.setOnClickListener {
-                val credential: MutableMap<String, String> = mutableMapOf(
+                credential = mutableMapOf(
                     "username" to editTextUsername.text.toString(),
                     "email" to editTextEmail.text.toString(),
                     "phone" to editTextPhone.text.toString(),
@@ -122,13 +123,13 @@ class RegisterFragment : Fragment() {
         fun onDataPass(data: MutableMap<String, String>?)
     }
 
+    fun passData(data: MutableMap<String, String>?) {
+        dataPasser.onDataPass(data)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         dataPasser = context as OnDataPass
-    }
-
-    fun passData(data: MutableMap<String, String>?) {
-        dataPasser.onDataPass(data)
     }
 
     companion object {
